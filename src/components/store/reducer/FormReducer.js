@@ -11,7 +11,7 @@ const INIT_STATE = {
     firstName: '',
     lastName: '',
     height: '',
-    position: 'pg',
+    position: '',
   },
   teamPlayers: {
     player1: '',
@@ -34,7 +34,14 @@ export default (state = INIT_STATE, action) => {
 
     case CREATE_PLAYER: {
       return {
-        ...state, playersLists: [...state.playersLists, action.payload]
+        ...state,
+        player: {
+          firstName: '',
+          lastName: '',
+          height: '',
+          position: '',
+        },
+        playersLists: [...state.playersLists, action.payload]
       }
     }
 
