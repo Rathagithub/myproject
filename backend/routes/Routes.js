@@ -8,10 +8,16 @@ router.get('/getplayers', (req, res) => {
  res.json(users)
 });
 
+router.get('/getteams', (req, res) => {
+ const teams = store.get('teams');
+ res.json(teams)
+});
+
 router.post('/create', (req, res) => {
  const id = req.body.id
  const user = req.body
- store.put(`players.${id}`, user)
+ const type = req.body.type
+ store.put(`${type}.${id}`, user)
  res.json(user)
 });
 

@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import SelectPlayers from './SelectPlayers'
 import SelectPosition from './SelectPosition'
 import { Box, Button } from '@material-ui/core';
-import { fetchAllPlayers, updateTeamPlayers } from './store/actions/FormAction'
+import { fetchAllPlayers, fetchAllTeams, createTeam, updateTeamPlayers } from './store/actions/FormAction'
 
 const SelectPlayerContainer = (props) => {
- const { playersLists, teamPlayers } = props.formReducer
+ const { playersLists, teamPlayers, teamLists } = props.formReducer
  React.useEffect(() => {
   props.fetchAllPlayers()
+  props.fetchAllTeams()
  }, [])
 
  const changePlayer = (key, id) => {
@@ -128,7 +129,7 @@ const SelectPlayerContainer = (props) => {
      color="primary"
      variant="contained"
      sx={{ alignSelf: 'flex-end' }}
-     onClick={() => { }}
+     onClick={() => props.createTeam(teamPlayers)}
     >
      Save
     </Button>
@@ -140,6 +141,8 @@ const SelectPlayerContainer = (props) => {
 const mapStateToProps = (formReducer) => ({ formReducer })
 
 export default connect(mapStateToProps, {
+ createTeam,
  fetchAllPlayers,
+ fetchAllTeams,
  updateTeamPlayers
 })(SelectPlayerContainer);

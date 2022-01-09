@@ -3,10 +3,12 @@ import moment from 'moment'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 import {
+   CREATE_TEAM,
    CREATE_PLAYER,
    UPDATE_FORM_DATA,
+   FETCH_TEAMS_LIST,
    FETCH_PLAYERS_LIST,
-   UPDATE_TEAM_PLAYER
+   UPDATE_TEAM_PLAYER,
 } from './types'
 
 const updateFormData = (value) => ({
@@ -27,6 +29,7 @@ const createPlayer = (value) => {
       id,
       height,
       position,
+      type: 'player',
       name: `${firstName} ${lastName}`,
       created: moment().utc().valueOf(),
       updated: moment().utc().valueOf()
@@ -46,6 +49,30 @@ const createPlayer = (value) => {
          })
 }
 
+const createTeam = (value) => {
+   const id = uuidv4()
+   const team = {
+      id,
+      players: value,
+      type: 'teams',
+      created: moment().utc().valueOf(),
+      updated: moment().utc().valueOf()
+   }
+
+   return (dispatch, getState, http) =>
+      http
+         .post(`/api/create`, team)
+         .then((res) => {
+            dispatch({
+               type: CREATE_TEAM,
+               payload: res.data,
+            })
+         })
+         .catch((err) => {
+            console.log('Create team failed')
+         })
+}
+
 const fetchAllPlayers = () => {
    return (dispatch, getState, http) =>
       http
@@ -62,9 +89,27 @@ const fetchAllPlayers = () => {
          })
 }
 
+const fetchAllTeams = () => {
+   return (dispatch, getState, http) =>
+      http
+         .get(`/api/getteams`)
+         .then((res) => {
+            const data = Object.values(res.data)
+            dispatch({
+               type: FETCH_TEAMS_LIST,
+               payload: data,
+            })
+         })
+         .catch((err) => {
+            console.log('Fetch player failuer')
+         })
+}
+
 export {
+   createTeam,
    createPlayer,
+   fetchAllTeams,
    updateFormData,
    fetchAllPlayers,
-   updateTeamPlayers
+   updateTeamPlayers,
 }
