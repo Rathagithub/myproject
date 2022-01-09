@@ -14,6 +14,7 @@ import {
 const CreateForm = (props) => {
  const { updateFormData, createPlayer, formReducer } = props
  const { firstName, lastName, height, position } = formReducer.player
+ const buttonDisable = !firstName || !lastName || !height || !position
 
  return (
   <Box className='form' >
@@ -37,6 +38,7 @@ const CreateForm = (props) => {
    </Box>
    <Box>
     <TextField
+     type="number"
      label="Height"
      variant="standard"
      className='fullWidth'
@@ -70,6 +72,7 @@ const CreateForm = (props) => {
      color="primary"
      variant="contained"
      sx={{ alignSelf: 'flex-end' }}
+     disabled={buttonDisable}
      onClick={() => createPlayer(formReducer.player)}
     >
      Save
