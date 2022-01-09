@@ -7,8 +7,7 @@ import {
 } from '@material-ui/core';
 
 const SelectPlayers = (props) => {
- const { playerId, changePlayer, playersList } = props
-
+ const { playerId, changePlayer, playersList, selectedPlayers } = props
  return (
   <div>
    <FormControl className='fullWidth' variant="filled">
@@ -20,7 +19,15 @@ const SelectPlayers = (props) => {
      onChange={(e) => changePlayer(e.target.value)}
     >
      <MenuItem value=""></MenuItem>
-     {playersList.map(p => <MenuItem key={p.id} value={p.id}>{p.name}</MenuItem>)}
+     {playersList.map(p => (
+      <MenuItem
+       key={p.id}
+       value={p.id}
+       disabled={selectedPlayers.includes(p.id)}
+      >
+       {p.name}
+      </MenuItem>
+     ))}
     </Select>
    </FormControl>
   </div>

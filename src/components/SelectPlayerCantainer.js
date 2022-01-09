@@ -6,7 +6,7 @@ import { Box, Button } from '@material-ui/core';
 import { fetchAllPlayers, fetchAllTeams, createTeam, updateTeamPlayers } from './store/actions/FormAction'
 
 const SelectPlayerContainer = (props) => {
- const { playersLists, teamPlayers, teamLists } = props.formReducer
+ const { playersLists, teamPlayers } = props.formReducer
  React.useEffect(() => {
   props.fetchAllPlayers()
   props.fetchAllTeams()
@@ -16,6 +16,7 @@ const SelectPlayerContainer = (props) => {
   const player = playersLists.filter(p => p.id === id)[0]
   props.updateTeamPlayers({ [key]: player })
  }
+ const selectedPlayers = Object.values(teamPlayers).filter(t => t.id !== undefined).map(p => p.id)
 
  return (
   <div style={{ width: '100%' }}>
@@ -31,6 +32,7 @@ const SelectPlayerContainer = (props) => {
     <Box style={{ width: 300 }}>
      <SelectPlayers
       playersList={playersLists}
+      selectedPlayers={selectedPlayers}
       playerId={teamPlayers.player1.id || ''}
       changePlayer={(e) => changePlayer('player1', e)}
      />
@@ -52,6 +54,7 @@ const SelectPlayerContainer = (props) => {
     <Box style={{ width: 300 }}>
      <SelectPlayers
       playersList={playersLists}
+      selectedPlayers={selectedPlayers}
       playerId={teamPlayers.player2.id || ''}
       changePlayer={(e) => changePlayer('player2', e)}
      />
@@ -73,6 +76,7 @@ const SelectPlayerContainer = (props) => {
     <Box style={{ width: 300 }}>
      <SelectPlayers
       playersList={playersLists}
+      selectedPlayers={selectedPlayers}
       playerId={teamPlayers.player3.id || ''}
       changePlayer={(e) => changePlayer('player3', e)}
      />
@@ -94,6 +98,7 @@ const SelectPlayerContainer = (props) => {
     <Box style={{ width: 300 }}>
      <SelectPlayers
       playersList={playersLists}
+      selectedPlayers={selectedPlayers}
       playerId={teamPlayers.player4.id || ''}
       changePlayer={(e) => changePlayer('player4', e)}
      />
@@ -115,6 +120,7 @@ const SelectPlayerContainer = (props) => {
     <Box style={{ width: 300 }}>
      <SelectPlayers
       playersList={playersLists}
+      selectedPlayers={selectedPlayers}
       playerId={teamPlayers.player5.id || ''}
       changePlayer={(e) => changePlayer('player5', e)}
      />
