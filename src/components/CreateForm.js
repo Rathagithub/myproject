@@ -14,25 +14,31 @@ import {
 const CreateForm = (props) => {
  const { updateFormData, createPlayer, formReducer } = props
  const { firstName, lastName, height, position } = formReducer.player
- const buttonDisable = !firstName || !lastName || !height || !position
+ const buttonDisable = !firstName || !lastName || !height
+
+ const createPlayerHandler = () => {
+  createPlayer(formReducer.player).then(() => console.log('suc')).catch(() => console.log('err'))
+ }
 
  return (
   <Box className='form' >
    <Box>
     <TextField
      label="First Name"
-     variant="standard"
      className='fullWidth'
      value={firstName}
+     required
+     error={!firstName}
      onChange={(e) => updateFormData({ firstName: e.target.value })}
     />
    </Box>
    <Box>
     <TextField
      label="Last Name"
-     variant="standard"
      className='fullWidth'
      value={lastName}
+     required
+     error={!lastName}
      onChange={(e) => updateFormData({ lastName: e.target.value })}
     />
    </Box>
@@ -40,9 +46,10 @@ const CreateForm = (props) => {
     <TextField
      type="number"
      label="Height"
-     variant="standard"
      className='fullWidth'
      value={height}
+     required
+     error={!height}
      onChange={(e) => updateFormData({ height: e.target.value })}
     />
    </Box>
@@ -73,11 +80,14 @@ const CreateForm = (props) => {
      variant="contained"
      sx={{ alignSelf: 'flex-end' }}
      disabled={buttonDisable}
-     onClick={() => createPlayer(formReducer.player)}
+     onClick={createPlayerHandler}
     >
      Save
     </Button>
    </div>
+   {formReducer.createError !== '' && (
+    <p style={{ color: "red" }}>{formReducer.createError}</p>
+   )}
   </Box>
  );
 }

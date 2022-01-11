@@ -9,6 +9,8 @@ import {
    FETCH_TEAMS_LIST,
    FETCH_PLAYERS_LIST,
    UPDATE_TEAM_PLAYER,
+   CREATE_ERROR,
+   CREATE_TEAM_ERROR
 } from './types'
 
 const updateFormData = (value) => ({
@@ -45,6 +47,11 @@ const createPlayer = (value) => {
             })
          })
          .catch((err) => {
+
+            dispatch({
+               type: CREATE_ERROR,
+               payload: "Create player failed",
+            })
             console.log('Create player failed')
          })
 }
@@ -69,6 +76,10 @@ const createTeam = (value) => {
             })
          })
          .catch((err) => {
+            dispatch({
+               type: CREATE_TEAM_ERROR,
+               payload: 'Create team failed',
+            })
             console.log('Create team failed')
          })
 }

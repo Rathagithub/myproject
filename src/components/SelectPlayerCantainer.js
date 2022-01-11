@@ -6,7 +6,7 @@ import { Box, Button } from '@material-ui/core';
 import { fetchAllPlayers, fetchAllTeams, createTeam, updateTeamPlayers } from './store/actions/FormAction'
 
 const SelectPlayerContainer = (props) => {
- const { playersLists, teamPlayers } = props.formReducer
+ const { playersLists, teamPlayers, createTeamError } = props.formReducer
  React.useEffect(() => {
   props.fetchAllPlayers()
   props.fetchAllTeams()
@@ -140,6 +140,9 @@ const SelectPlayerContainer = (props) => {
      Save
     </Button>
    </div>
+   {createTeamError !== '' && (
+    <p style={{ color: "red" }}>{createTeamError}</p>
+   )}
   </div>
  );
 }
