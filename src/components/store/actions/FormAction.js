@@ -31,7 +31,6 @@ const createPlayer = (value) => {
       id,
       height,
       position,
-      type: 'player',
       name: `${firstName} ${lastName}`,
       created: moment().utc().valueOf(),
       updated: moment().utc().valueOf()
@@ -39,7 +38,7 @@ const createPlayer = (value) => {
 
    return (dispatch, getState, http) =>
       http
-         .post(`/api/create`, player)
+         .post(`/api/create/player`, player)
          .then((res) => {
             dispatch({
                type: CREATE_PLAYER,
@@ -61,14 +60,13 @@ const createTeam = (value) => {
    const team = {
       id,
       players: value,
-      type: 'teams',
       created: moment().utc().valueOf(),
       updated: moment().utc().valueOf()
    }
 
    return (dispatch, getState, http) =>
       http
-         .post(`/api/create`, team)
+         .post(`/api/create/team`, team)
          .then((res) => {
             dispatch({
                type: CREATE_TEAM,

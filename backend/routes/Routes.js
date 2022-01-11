@@ -13,17 +13,27 @@ router.get('/getteams', (req, res) => {
  res.json(teams)
 });
 
-router.post('/create', (req, res) => {
+router.post('/create/team', (req, res) => {
  const id = req.body.id
  const user = req.body
- const type = req.body.type
- store.put(`${type}.${id}`, user)
+ store.put(`team.${id}`, user)
  res.json(user)
 });
 
-router.delete('/delete', (req, res) => {
- const type = 'players'
- store.remove(type);
+router.post('/create/player', (req, res) => {
+ const id = req.body.id
+ const user = req.body
+ store.put(`players.${id}`, user)
+ res.json(user)
+});
+
+router.delete('/delete/players', (req, res) => {
+ store.remove('players');
+ res.json("ok")
+});
+
+router.delete('/delete/teams', (req, res) => {
+ store.remove('teams');
  res.json("ok")
 });
 
